@@ -50,14 +50,15 @@ public class HttpVerticle extends AbstractVerticle {
       .put("password", "th!$p@ss")
       .put("username", "digvijaybhk@gmail.com");
 
-    vertx.eventBus().send("noop-user-vertx", user, ar -> {
+    //vertx.eventBus().send("noop-user-vertx", user, ar -> {
+    vertx.eventBus().send("db-save-user-todb", user, ar -> {
 
       if (ar.succeeded()) {
         routingContext.response()
           .setStatusCode(201)
           .putHeader("Content-Type", "application/json; charset=utf-8")
           .end(ar.result().body().toString());
-      }else {
+      } else {
         log.debug("This a fall back");
         routingContext.response()
           .setStatusCode(200)
@@ -66,7 +67,6 @@ public class HttpVerticle extends AbstractVerticle {
       }
 
     });
-
 
 
   }

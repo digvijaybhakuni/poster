@@ -11,7 +11,9 @@ public class MainVerticle extends AbstractVerticle {
 
   @Override
   public void start(Future<Void> startFuture) throws Exception {
-    List<Future> futures = List.of("in.action.poster.verticle.HttpVerticle")
+    List<Future> futures = List.of("in.action.poster.verticle.HttpVerticle",
+      "in.action.poster.verticle.DBAccessVerticle",
+      "in.action.poster.verticle.NoopUserVerticle")
       .stream().map(this::deployVerticle).collect(Collectors.toList());
     CompositeFuture.all(futures)
       .setHandler(f ->{
